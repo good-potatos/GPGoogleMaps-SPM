@@ -9,12 +9,26 @@ let package = Package(
         .library(
             name: "GPGoogleMaps-SPM",
             targets: [
-                "GoogleMaps",
-                "GoogleMapsBase",
-                "GoogleMapsCore"
+                "GoogleMapsWrapper",
             ]),
     ],
     targets: [
+        .target(
+            name: "GoogleMapsWrapper",
+            dependencies: [
+              "GoogleMaps",
+              "GoogleMapsBase",
+              "GoogleMapsCore",
+            ],
+            path: "GoogleMapsWrapper",
+            linkerSettings: [
+              .linkedLibrary("z"),
+              .linkedFramework("CoreData"),
+              .linkedFramework("CoreLocation"),
+              .linkedFramework("CoreTelephony"),
+              .linkedFramework("SystemConfiguration"),
+            ]
+        ),
         .binaryTarget(
             name: "GoogleMaps",
             url: "https://github.com/good-potatos/GPGoogleMaps-SPM/releases/download/8.0.0/GoogleMaps.xcframework.zip",
